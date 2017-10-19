@@ -25,7 +25,7 @@ toolchain:
 services:
   messaging:
     service_id: slack
-    $text: slack.yml
+    $ref: slack.yml
   sample-repo:
     service_id: githubpublic
     parameters:
