@@ -1,0 +1,67 @@
+version: '1'
+messages:
+  $i18n: locales.yml
+template:
+  name:
+    $ref: "#/messages/template.name"
+  description:
+    $ref: "#/messages/template.description"
+  header: '![](toolchain.svg?localize)'
+  icon: icon.svg
+  required:
+    - messaging
+    - sample-build
+    - sample-repo
+  info:
+    git url: >-
+      [https://github.ibm.com/gp/simple-globalizationpipeline-toolchain](https://github.ibm.com/gp/simple-globalizationpipeline-toolchain)
+    git branch: >-
+      [master](https://github.ibm.com/gp/simple-globalizationpipeline-toolchain/tree/master)
+toolchain:
+  name: 'simple-toolchain-{{timestamp}}'
+  template:
+    getting_started:
+      $ref: "#/messages/template.gettingStarted"
+services:
+  messaging:
+    service_id: slack
+    $ref: slack.yml
+  sample-repo:
+    service_id: githubpublic
+    parameters:
+      repo_name: '{{toolchain.name}}'
+      repo_url: 'https://github.com/open-toolchain/node-hello-world'
+      type: clone
+      has_issues: true
+      enable_traceability: true
+  sample-build:
+    service_id: pipeline
+    parameters:
+      services:
+        - sample-repo
+      name: '{{services.sample-repo.parameters.repo_name}}'
+      ui-pipeline: true
+      configuration:
+        content:
+          $text: pipeline.yml
+        env:
+          SAMPLE_REPO: sample-repo
+          CF_APP_NAME: '{{form.pipeline.parameters.prod-app-name}}'
+          PROD_SPACE_NAME: '{{form.pipeline.parameters.prod-space}}'
+          PROD_ORG_NAME: '{{form.pipeline.parameters.prod-organization}}'
+          PROD_REGION_ID: '{{form.pipeline.parameters.prod-region}}'
+        execute: true
+  sauce-test:
+    service_id: saucelabs
+    $ref: saucelabs.yml
+  globalization-pipeline:
+    service_id: g11npipeline
+    $ref: g11npipeline.yml
+  webide:
+    service_id: orion
+form:
+  pipeline:
+    parameters:
+      prod-app-name: '{{services.sample-repo.parameters.repo_name}}'
+    schema:
+      $ref: deploy.json
