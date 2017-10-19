@@ -1,4 +1,4 @@
-version: '1'
+version: '2'
 messages:
   $i18n: locales.yml
 template:
@@ -9,23 +9,19 @@ template:
   header: '![](toolchain.svg?localize)'
   icon: icon.svg
   required:
-    - messaging
     - sample-build
     - sample-repo
   info:
     git url: >-
-      [https://github.ibm.com/gp/simple-globalizationpipeline-toolchain](https://github.ibm.com/gp/simple-globalizationpipeline-toolchain)
+      [https://github.com/open-toolchain/simple-toolchain](https://github.com/open-toolchain/simple-toolchain)
     git branch: >-
-      [master](https://github.ibm.com/gp/simple-globalizationpipeline-toolchain/tree/master)
+      [master](https://github.com/open-toolchain/simple-toolchain/tree/master)
 toolchain:
   name: 'simple-toolchain-{{timestamp}}'
   template:
     getting_started:
       $ref: "#/messages/template.gettingStarted"
 services:
-  messaging:
-    service_id: slack
-    $ref: slack.yml
   sample-repo:
     service_id: githubpublic
     parameters:
@@ -51,12 +47,6 @@ services:
           PROD_ORG_NAME: '{{form.pipeline.parameters.prod-organization}}'
           PROD_REGION_ID: '{{form.pipeline.parameters.prod-region}}'
         execute: true
-  sauce-test:
-    service_id: saucelabs
-    $ref: saucelabs.yml
-  globalization-pipeline:
-    service_id: g11npipeline
-    $ref: g11npipeline.yml
   webide:
     service_id: orion
 form:
