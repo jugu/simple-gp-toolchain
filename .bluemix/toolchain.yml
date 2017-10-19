@@ -9,6 +9,7 @@ template:
   header: '![](toolchain.svg?localize)'
   icon: icon.svg
   required:
+    - messaging
     - sample-build
     - sample-repo
   info:
@@ -22,6 +23,9 @@ toolchain:
     getting_started:
       $ref: "#/messages/template.gettingStarted"
 services:
+  messaging:
+    service_id: slack
+    $ref: slack.yml
   sample-repo:
     service_id: githubpublic
     parameters:
