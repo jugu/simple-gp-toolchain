@@ -9,9 +9,6 @@ template:
   header: '![](toolchain.svg?localize)'
   icon: icon.svg
   required:
-    - messaging
-    - sauce-test
-    - globalization-pipeline
     - sample-build
     - sample-repo
   info:
@@ -41,29 +38,36 @@ services:
     parameters:
       services:
         - sample-repo
+        - test
       name: '{{services.sample-repo.parameters.repo_name}}'
       ui-pipeline: true
       configuration:
         content:
           $text: pipeline.yml
         env:
+          SAUCE_LABS: test
           SAMPLE_REPO: sample-repo
           CF_APP_NAME: '{{form.pipeline.parameters.prod-app-name}}'
+          STAGING_SPACE_NAME: '{{form.pipeline.parameters.staging-space}}'
+          STAGING_ORG_NAME: '{{form.pipeline.parameters.staging-organization}}'
+          STAGING_REGION_ID: '{{form.pipeline.parameters.staging-region}}'
           PROD_SPACE_NAME: '{{form.pipeline.parameters.prod-space}}'
           PROD_ORG_NAME: '{{form.pipeline.parameters.prod-organization}}'
           PROD_REGION_ID: '{{form.pipeline.parameters.prod-region}}'
         execute: true
-  sauce-test:
+  test:
     service_id: saucelabs
-    s$ref: saucelabs.yml
+    $ref: saucelabs.yml
   globalization-pipeline:
-      service_id: g11npipeline
-      $ref: g11npipeline.yml
+    service_id: g11npipeline
+    $ref: g11npipeline.yml
   webide:
     service_id: orion
 form:
   pipeline:
     parameters:
+      staging-space: staging
+      prod-space: prod
       prod-app-name: '{{services.sample-repo.parameters.repo_name}}'
     schema:
       $ref: deploy.json
