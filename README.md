@@ -1,6 +1,6 @@
-# Simple Cloud Foundry toolchain
+# Simple Cloud Foundry toolchain with Globalization Pipeline integration
 
-This Hello World application uses Node.js and includes a DevOps toolchain that is preconfigured for continuous delivery, source control, issue tracking, and online editing.
+This Hello World application uses Node.js and includes a DevOps toolchain that is preconfigured for continuous delivery, source control, issue tracking, saucelabs testing, application globalization, and online editing.
 
 To get started, click **Create toolchain**.
 
