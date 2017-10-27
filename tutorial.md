@@ -15,7 +15,7 @@
   - git add, commit, and push the file into the repository
   
 ### Step 3 - Wait for Pull Request and merge after review
-  - As soon as the file is push to the repository, then as part of the preconfigured delivery pipeline following things occur automatically:
+  - As soon as the resource file is pushed to the repository, then as part of the preconfigured delivery pipeline following things occur automatically:
     - The globalization pipline which was preconfigured to look for changes in source translation json file will trigger Machine translation of all the source language resource files.
     - After the Machine translation has been completed a slack notification will be sent to the slack channel configured as part of this toolchain.
     - The user can then see a Pull Request being created in the git repo which contains translated resource files which can be merged into the git repository
